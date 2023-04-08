@@ -52,3 +52,33 @@ tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Grave, twice for ESC
     [TD_GRV_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_GRV, KC_ESC)
 };
+
+// Caps Word configuration
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+        case KC_SLSH:
+        case KC_0: // Ö
+        case KC_MINS: // Ü
+        case KC_EQL: // Ó
+        case KC_LBRC: // Ő
+        case KC_RBRC: // Ú
+        case KC_SCLN: // É
+        case KC_QUOT: // Á
+        case KC_NUHS: // Ű
+        case KC_NUBS: // Í
+            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_9:
+        case KC_GRV: //0
+        case KC_BSPC:
+        case KC_DEL:
+            return true;
+
+        default:
+            return false;  // Deactivate Caps Word.
+    }
+}
