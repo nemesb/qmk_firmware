@@ -40,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap _FL: Function Layer
    */
 [_FL] = LAYOUT_65_iso_blocker(
-  KC_ESC,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,    _______,  _______,
+  KC_ESC,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,    AC_TOGG,  _______,
   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_PSCR,  KC_SCRL,  KC_PAUS,             _______,
   _______,  _______,  RM_HUEU,  RM_SATU,  RM_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,  KC_PGUP,
   _______,  _______,  RM_HUED,  RM_SATD,  RM_SPDD,  RM_TOGG,  KC_MUTE,  KC_VOLU,  KC_VOLD,  KC_MPRV,  KC_MPLY,  KC_MNXT,  _______,   RM_VALU,  KC_PGDN,
@@ -81,6 +81,17 @@ bool caps_word_press_user(uint16_t keycode) {
         default:
             return false;  // Deactivate Caps Word.
     }
+}
+
+bool apply_autocorrect(uint8_t backspaces, const char *str, char *typo, char *correct) {
+    if (strcmp(correct, "chr_pipe") == 0) {
+        for (uint8_t i = 0; i < backspaces; ++i) {
+            tap_code(KC_BSPC);
+        }
+        tap_code16(RALT(KC_W));
+        return false;
+    }
+    return true;
 }
 
 /* 
