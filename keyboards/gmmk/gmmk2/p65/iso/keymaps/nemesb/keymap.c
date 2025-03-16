@@ -84,17 +84,6 @@ bool caps_word_press_user(uint16_t keycode) {
     }
 }
 
-bool apply_autocorrect(uint8_t backspaces, const char *str, char *typo, char *correct) {
-    if (strcmp(correct, "chr_pipe") == 0) {
-        for (uint8_t i = 0; i < backspaces; ++i) {
-            tap_code(KC_BSPC);
-        }
-        tap_code16(RALT(KC_W));
-        return false;
-    }
-    return true;
-}
-
 /* 
  * Handle LEDs
  */
