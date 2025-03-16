@@ -15,6 +15,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "sendstring_hungarian.h"
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
@@ -31,10 +32,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap _BL: Base Layer (Default Layer)
    */
 [_BL] = LAYOUT_65_iso_blocker(
-  TD(TD_GRV_ESC), KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,  KC_INS,
-  KC_TAB,         KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,            KC_DEL,
-  KC_CAPS,        KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,  KC_NUHS,  KC_ENT,   KC_HOME,
-  KC_LSFT,        KC_NUBS,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_RSFT,  KC_UP,    KC_END,
+  TD(TD_GRV_ESC), HU_1,     HU_2,     HU_3,     HU_4,     HU_5,     HU_6,     HU_7,     HU_8,     HU_9,     HU_ODIA,  HU_UDIA,  HU_OACU,  KC_BSPC,  KC_INS,
+  KC_TAB,         HU_Q,     HU_W,     HU_E,     HU_R,     HU_T,     HU_Z,     HU_U,     HU_I,     HU_O,     HU_P,     HU_ODAC,  HU_UACU,            KC_DEL,
+  KC_CAPS,        HU_A,     HU_S,     HU_D,     HU_F,     HU_G,     HU_H,     HU_J,     HU_K,     HU_L,     HU_EACU,  HU_AACU,  HU_UDAC,  KC_ENT,   KC_HOME,
+  KC_LSFT,        HU_IACU,  HU_Y,     HU_X,     HU_C,     HU_V,     HU_B,     HU_N,     HU_M,     HU_COMM,  HU_DOT,   HU_MINS,  KC_RSFT,  KC_UP,    KC_END,
   KC_LCTL,        KC_LGUI,  KC_LALT,                                KC_SPC,                                 KC_RALT,  MO(1),    KC_LEFT,  KC_DOWN,  KC_RGHT),
 
   /* Keymap _FL: Function Layer
@@ -50,30 +51,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Tap Dance definitions
 tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Grave, twice for ESC
-    [TD_GRV_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_GRV, KC_ESC)
+    [TD_GRV_ESC] = ACTION_TAP_DANCE_DOUBLE(HU_0, KC_ESC)
 };
 
 // Caps Word configuration
 bool caps_word_press_user(uint16_t keycode) {
     switch (keycode) {
         // Keycodes that continue Caps Word, with shift applied.
-        case KC_A ... KC_Z:
-        case KC_SLSH:
-        case KC_0: // Ö
-        case KC_MINS: // Ü
-        case KC_EQL: // Ó
-        case KC_LBRC: // Ő
-        case KC_RBRC: // Ú
-        case KC_SCLN: // É
-        case KC_QUOT: // Á
-        case KC_NUHS: // Ű
-        case KC_NUBS: // Í
+        case HU_A ... HU_Z:
+        case HU_MINS:
+        case HU_ODIA: // Ö
+        case HU_UDIA: // Ü
+        case HU_OACU: // Ó
+        case HU_ODAC: // Ő
+        case HU_UACU: // Ú
+        case HU_EACU: // É
+        case HU_AACU: // Á
+        case HU_UDAC: // Ű
+        case HU_IACU: // Í
             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
             return true;
 
         // Keycodes that continue Caps Word, without shifting.
-        case KC_1 ... KC_9:
-        case KC_GRV: //0
+        case HU_0: //0
+        case HU_1 ... HU_9:
         case KC_BSPC:
         case KC_DEL:
             return true;
